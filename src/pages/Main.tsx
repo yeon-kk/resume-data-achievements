@@ -1,4 +1,17 @@
-import { Button, Input, Flex, ChakraProvider, Heading, Text, Box } from '@chakra-ui/react';
+/* eslint-disable react/no-children-prop */
+import {
+  Button,
+  Input,
+  Flex,
+  ChakraProvider,
+  Heading,
+  Text,
+  Box,
+  Textarea,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import styles from './Main.module.css';
 
@@ -14,6 +27,7 @@ const CLIENT_ID = 'clientId';
 const REDIRECT_URI = 'redirectURI';
 const CLIENT_SECRET = 'clientSecret';
 const CLIENT_CODE = 'code';
+const BLOG_NAME = 'blogName';
 
 function Main() {
   const [info, setInfo] = useState<InfoType>({
@@ -26,6 +40,7 @@ function Main() {
 
   const [response, setResponse] = useState('');
   const [accessResponse, setAccessresponse] = useState('');
+  const [textareaValue, setTextareaValue] = useState('');
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.currentTarget.name;
@@ -41,6 +56,11 @@ function Main() {
   const handleAccessButton = () => {
     const response = `https://www.tistory.com/oauth/access_token?client_id=${info.clientId}&client_secret=${info.clientSecret}&redirect_uri=${info.redirectURI}&code=${info.code}&grant_type=authorization_code`;
     setAccessresponse(response);
+  };
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.currentTarget.value;
+    const valueReplace = value.replace(/(\s*)/g, '');
+    setTextareaValue(valueReplace);
   };
 
   useEffect(() => {
@@ -120,18 +140,30 @@ function Main() {
                         400 에러가 response 된다면, 새로 Authentication code를 발급해주세요.
                       </Text>
                     </Box>
+                    <Box w="100%" p={4}>
+                      <a
+                        target="_blank"
+                        className={styles.link}
+                        href="https://www.postman.com/"
+                        rel="noreferrer"
+                      >
+                        https://www.postman.com/
+                      </a>
+                      <>
+                        <Text mb="8px">Access Token 메모</Text>
+                        <Textarea size="sm" value={textareaValue} onChange={handleTextareaChange} />
+                        <InputGroup size="sm">
+                          <InputLeftAddon children="https://" />
+                          <Input placeholder="blogName" name={BLOG_NAME} onChange={handleInput} />
+                          <InputRightAddon children=".tistory.com" />
+                        </InputGroup>
+                      </>
+                      <Box w="100%" p={4}>
+                        {`https://www.tistory.com/apis/post/list?access_token=${textareaValue}&output=json&blogName=${info.blogName}`}
+                      </Box>
+                    </Box>
                   </div>
                 )}
-              </Box>
-              <Box w="100%" p={4}>
-                <a
-                  target="_blank"
-                  className={styles.link}
-                  href="https://www.postman.com/"
-                  rel="noreferrer"
-                >
-                  https://www.postman.com/
-                </a>
               </Box>
             </div>
           )}
