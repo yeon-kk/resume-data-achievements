@@ -13,6 +13,7 @@ interface InfoType {
 const CLIENT_ID = 'clientId';
 const REDIRECT_URI = 'redirectURI';
 const CLIENT_SECRET = 'clientSecret';
+const CLIENT_CODE = 'code';
 
 function Main() {
   const [info, setInfo] = useState<InfoType>({
@@ -24,6 +25,7 @@ function Main() {
   });
 
   const [response, setResponse] = useState('');
+  const [accessResponse, setAccessresponse] = useState('');
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.currentTarget.name;
@@ -35,6 +37,10 @@ function Main() {
   const handleCreateCodeButton = () => {
     const response = `https://www.tistory.com/oauth/authorize?client_id=${info.clientId}&redirect_uri=${info.redirectURI}&response_type=code`;
     setResponse(response);
+  };
+  const handleAccessButton = () => {
+    const response = `https://www.tistory.com/oauth/access_token?client_id=${info.clientId}&client_secret=${info.clientSecret}&redirect_uri=${info.redirectURI}&code=${info.code}&grant_type=authorization_code`;
+    setAccessresponse(response);
   };
 
   useEffect(() => {
@@ -85,6 +91,46 @@ function Main() {
               <Box w="100%" p={4}>
                 <a className={styles.link} target="_blank" href={response} rel="noreferrer">
                   {response}
+                </a>
+              </Box>
+              <Heading as="h2" size="lg">
+                2. Access Token 발급
+              </Heading>
+              <Box w="100%" p={4}>
+                <Text mb="8px">code</Text>
+                <Input placeholder="code" name={CLIENT_CODE} onChange={handleInput} />{' '}
+              </Box>
+              <Button
+                colorScheme="yellow"
+                onClick={handleAccessButton}
+                w="100%"
+                p={4}
+                m={4}
+                borderRadius={100}
+              >
+                Access Token 발급 URL 생성
+              </Button>
+              <Box w="100%" p={4}>
+                {accessResponse && (
+                  <div>
+                    <Text mb="8px">{accessResponse}</Text>
+                    <Box p={4} w="100%" marginTop={2} bg={'green.100'}>
+                      <Text fontSize="md">주의! Access Token 발급시 1회만 사용 가능합니다.</Text>
+                      <Text fontSize="md">
+                        400 에러가 response 된다면, 새로 Authentication code를 발급해주세요.
+                      </Text>
+                    </Box>
+                  </div>
+                )}
+              </Box>
+              <Box w="100%" p={4}>
+                <a
+                  target="_blank"
+                  className={styles.link}
+                  href="https://www.postman.com/"
+                  rel="noreferrer"
+                >
+                  https://www.postman.com/
                 </a>
               </Box>
             </div>
