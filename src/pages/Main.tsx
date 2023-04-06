@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import styles from './Main.module.css';
+import List from '../components/List';
 
 interface InfoType {
   clientId: string;
@@ -162,6 +163,9 @@ function Main() {
                         {`https://www.tistory.com/apis/post/list?access_token=${textareaValue}&output=json&blogName=${info.blogName}`}
                       </Box>
                     </Box>
+                    <List
+                      listRequest={`https://www.tistory.com/apis/post/list?access_token=${textareaValue}&output=json&blogName=${info.blogName}`}
+                    />
                   </div>
                 )}
               </Box>
