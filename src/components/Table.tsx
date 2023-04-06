@@ -32,7 +32,7 @@ function DataTable({ data, weeks, days }: DataPropsType) {
           </Tr>
           <Tr>
             <Th>일 평균</Th>
-            <Th isNumeric>{data && (dataSum(data) / days).toFixed(2)}</Th>
+            <Th isNumeric>{days && (dataSum(data) / days).toFixed(2)}</Th>
           </Tr>
           <Tr>
             <Th>주 평균</Th>
