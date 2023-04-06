@@ -2,15 +2,11 @@ import { Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react';
 
 interface CheckBoxPropsType {
   values: string[];
-  isChecked: boolean[];
+  onChangeHandler: (index: number) => () => void;
   size: string;
 }
 
-function CheckBox({ values, isChecked, size }: CheckBoxPropsType) {
-  const onChangeHandler = (index: number) => () => {
-    isChecked[index] = !isChecked[index];
-  };
-
+function CheckBox({ values, onChangeHandler, size }: CheckBoxPropsType) {
   return (
     <CheckboxGroup colorScheme="green" defaultValue={values}>
       <Stack spacing={[1, 5]} direction={'row'}>
