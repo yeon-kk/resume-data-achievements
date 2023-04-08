@@ -21,7 +21,7 @@ npm install
 
 ### 프로그램 사용 방법
 1.티스토리 오픈 API를 이용할 수 있도록 [앱 등록]과정이 필요합니다.  
-[https://www.tistory.com/guide/api/manage/register](https://www.tistory.com/guide/api/manage/register)
+[https://www.tistory.com/guide/api/manage/register](https://www.tistory.com/guide/api/manage/register)  
 ![image](https://user-images.githubusercontent.com/86847564/230699489-625ac2b0-2c43-446e-ab42-dc13bdef03c2.png)
 
 해당 페이지에서 작성해야 하는 부분은 다음 항목들이 있습니다.  
